@@ -10,6 +10,11 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "faded-text": "#00000099",
+      },
+      fontFamily: {
+        inter: ["var(--font-inter)", "sans-serif"],
+        lato: ["var(--font-lato)", "sans-serif"],
       },
     },
   },
