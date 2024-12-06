@@ -5,15 +5,17 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter",
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext", "greek", "greek-ext", "vietnamese"]
 });
 const lato = Lato({
   variable: "--font-lato",
   weight: ["100", "300", "400", "700", "900"],
+  subsets: ["latin", "latin-ext"]
 });
 
 export const metadata = {
   title: "Graw",
-  description: "dEscription",
+  description: "description",
   applicationName: "Graw",
   referrer: "origin-when-cross-origin",
   keywords: ["Web 3"],
