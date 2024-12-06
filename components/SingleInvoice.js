@@ -1,16 +1,16 @@
 // Components
-import CreateInvoiceCard from "./CreateInvoiceCard";
+import ViewInvoiceCard from "./ViewInvoiceCard";
 import Footer from "./Footer";
 
 import Link from "next/link";
 import Image from "next/image";
 
-const CreateInvoice = () => {
+const SingleInvoice = () => {
   return (
     <div className="w-3/4 xl:w-3/4 2xl:w-3/5  mx-auto space-y-8 xl:space-y-14">
       {/* Nav */}
 
-      <div className="flex justify-between items-center py-3">
+      <div className="flex justify-between items-start py-3">
         {/* Brand */}
         <Link href={`/`} className="flex items-center gap-2">
           <Image
@@ -39,7 +39,7 @@ const CreateInvoice = () => {
       </div>
 
       {/* Content */}
-      <div className="flex gap-5 items-center relative">
+      <div className="flex gap-5 items-start relative">
         <div className="absolute -left-16 top-0 space-y-3">
           <Link
             href={`/dashboard`}
@@ -66,7 +66,7 @@ const CreateInvoice = () => {
           </Link>
         </div>
 
-        <CreateInvoiceCard />
+        <ViewInvoiceCard />
       </div>
 
       {/* Footer */}
@@ -75,4 +75,4 @@ const CreateInvoice = () => {
   );
 };
 
-export default CreateInvoice;
+export default SingleInvoice;

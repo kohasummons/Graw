@@ -19,7 +19,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const CreateInvoiceCard = () => {
+const ViewInvoiceCard = () => {
   //  Form
   const [formData, setFormData] = useState({});
   const [img, setImg] = useState("");
@@ -352,143 +352,37 @@ const CreateInvoiceCard = () => {
       </div>
 
       {/* Right side */}
-      <div className="w-2/5 bg-[#FAFAFA] h-[75vh] rounded-lg overflow-scroll scrollable-box p-4 space-y-5 relative">
-        {isSuccess ? (
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform
-            w-3/4 space-y-3"
+      <div className="w-2/5 bg-[#FAFAFA] rounded-lg overflow-scroll scrollable-box p-5 space-y-5 relative">
+        {/* Buttons */}
+        <div className="space-y-3 pb-10 border-b border-b-[#EFEFEF]">
+          <button
+            type="button"
+            className="py-2 w-full font-inter font-semibold text-[#5D9271] bg-[#EFF8D0] rounded-lg"
           >
-            <div className="flex gap-2 items-center justify-center">
-              <span className="text-xl font-lato font-bold text-[#141414]">
-                Invoice Created
-              </span>
-              <Image
-                src={`/Images/check.svg`}
-                width={24}
-                height={24}
-                alt="Loading"
-              />
-            </div>
-            <p className=" text-center text-sm font-lato font-bold text-[#808080]">
-              The invoice has been successfully created and sent to the
-              client&apos;s wallet address.
-            </p>
+            Pay Invoice
+          </button>
 
-            <div className="flex justify-center items-center gap-2">
-              <div className="p-2 border border-[#5D9271] rounded-lg flex items-center justify-center">
-                <Image
-                  src={`/Images/download.svg`}
-                  width={24}
-                  height={24}
-                  alt="Download icon"
-                />
-              </div>
+          <button
+            type="button"
+            className="py-2 w-full font-inter font-semibold text-[#5D9271] bg-white border border-[#5D9271] rounded-lg"
+          >
+            Download Invoice
+          </button>
 
-              <button
-                type="button"
-                className="p-3 bg-[#EFF8D0] text-[#5D9271] font-inter font-semibold rounded-xl"
-                onClick={returnToDashboard}
-              >
-                Go to Dashboard
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            {isLoading ? (
-              <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform
-             flex gap-2 items-center justify-center w-full"
-              >
-                <span className="text-xl font-lato font-bold text-[#141414]">
-                  Creating Invoice
-                </span>
-                <Image
-                  src={`/Images/loading.svg`}
-                  width={24}
-                  height={24}
-                  alt="Loading"
-                />
-              </div>
-            ) : (
-              <>
-                <h2 className="font-bold font-lato text-[#141414] text-xl">
-                  Create Invoice
-                </h2>
+          <button
+            type="button"
+            className="py-2 w-full font-inter font-semibold text-[#CF5F5F] bg-white border border-[#CF5F5F] rounded-lg"
+          >
+            Delete Invoice
+          </button>
+        </div>
 
-                {/* Tabs */}
-                <div className="flex items-center xl:gap-5 border-b-[#A8A8A8] border-b">
-                  {tabs.map((tab) => (
-                    <div
-                      key={tab.id}
-                      className={`flex gap-2 items-center justify-center p-2 cursor-pointer text-[7px]
-                2xl:text-xs xl:text-[9px]  ${
-                  activeTab === tab.id ? "text-[#141414]" : "text-[#A8A8A8]"
-                }  font-bold pb-3  ${
-                        activeTab === tab.id
-                          ? "border-b-[#141414] border-b-2"
-                          : ""
-                      }`}
-                      onClick={() => handleTabClick(tab.id)}
-                    >
-                      {tab.icon}
-                      {tab.label}
-                    </div>
-                  ))}
-                </div>
-
-                {activeTab === 0 ? (
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-lato font-bold">Information</h3>
-                    <p className="text-xs text-[#A3A3A3] font-bold font-lato w-[90%]">
-                      Set your invoice details to be automatically applied every
-                      time you create a new invoice
-                    </p>
-                  </div>
-                ) : activeTab === 1 ? (
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-lato font-bold">
-                      Client Information
-                    </h3>
-                    <p className="text-xs text-[#A3A3A3] font-bold font-lato w-[90%]">
-                      Invoice details about the client and the payment
-                      preferences
-                    </p>
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                {/* Content */}
-                <div className="h-3/5 xl:h-[55%] 2xl:h-[68%] overflow-scroll scrollable-box">
-                  {tabs[activeTab].content}
-                </div>
-
-                {/* Footer */}
-                <div className="absolute bottom-5 right-4 xl:w-3/5 flex gap-2">
-                  <button
-                    className="bg-[#E7E7E7] text-[#A3A3A3] 
-           font-inter font-semibold py-2 px-4 rounded-lg"
-                  >
-                    Cancel
-                  </button>
-
-                  <button
-                    className="bg-[#EFF8D0] text-[#5D9271] font-inter font-semibold py-2 px-4 rounded-lg
-          flex gap-2 items-center"
-                    onClick={handleSubmit}
-                  >
-                    Continue
-                    <ArrowRight size={20} />
-                  </button>
-                </div>
-              </>
-            )}
-          </>
-        )}
+        <div className="w-full h-12 flex items-center justify-center text-[#A8A8A8] font-inter font-medium">
+          <Link href={`/dashboard`}>Back to dashboard</Link>
+        </div>
       </div>
     </>
   );
 };
 
-export default CreateInvoiceCard;
+export default ViewInvoiceCard;
