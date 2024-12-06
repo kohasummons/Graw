@@ -26,7 +26,7 @@ const CreateInvoice = () => {
     {
       id: 1,
       label: "Create Invoice",
-      content: <CreateInvoiceCard />,
+      content: <CreateInvoiceCard handleTabChange={handleTabClick} />,
     },
   ];
   return (
