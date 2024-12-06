@@ -117,77 +117,77 @@ const Dashboard = () => {
 
           {/* table */}
           <div>
-            <div class="flex flex-col">
-              <div class="-m-1.5 overflow-x-auto">
-                <div class="p-1.5 min-w-full inline-block align-middle">
-                  <div class="overflow-hidden">
+            <div className="flex flex-col">
+              <div className="-m-1.5 overflow-x-auto">
+                <div className="p-1.5 min-w-full inline-block align-middle">
+                  <div className="overflow-hidden">
                     <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                       <thead className="bg-[#FAFAFA]">
                         <tr>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-sm font-medium "
+                            className="px-6 py-3 text-start text-sm font-medium "
                           >
                             Invoice ID
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-sm font-medium "
+                            className="px-6 py-3 text-start text-sm font-medium "
                           >
                             Date
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-sm font-medium "
+                            className="px-6 py-3 text-start text-sm font-medium "
                           >
                             Name
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-sm font-medium "
+                            className="px-6 py-3 text-start text-sm font-medium "
                           >
                             Amount
                           </th>
 
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-sm font-medium "
+                            className="px-6 py-3 text-start text-sm font-medium "
                           >
                             Status
                           </th>
 
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-sm font-medium "
+                            className="px-6 py-3 text-start text-sm font-medium "
                           ></th>
                         </tr>
                       </thead>
 
                       <tbody>
                         <tr
-                          className="odd:bg-[#F5F5F5] even:even:bg-[#FAFAFA] cursor-pointer"
+                          className="odd:bg-[#F5F5F5] even:even:bg-[#FAFAFA] cursor-pointer group"
                           onClick={() => viewInvoice("D5VG67")}
                         >
-                          <td class="px-6 py-4 whitespace-nowrap text-sm font-lato font-bold text-[#A8A8A8] ">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-lato font-bold text-[#A8A8A8] ">
                             #Graw - 001
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm font-lato text-[#A8A8A8] ">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-lato text-[#A8A8A8] ">
                             05 / 10 / 24
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-sm font-lato text-[#A8A8A8] ">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-lato text-[#A8A8A8] ">
                             Joshua Omobola
                           </td>
 
-                          <td class="px-6 py-4 whitespace-nowrap text-sm font-lato text-[#A8A8A8] ">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-lato text-[#A8A8A8] ">
                             1 ETH
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-start text-sm font-lato font-bold">
+                          <td className="px-6 py-4 whitespace-nowrap text-start text-sm font-lato font-bold">
                             <span className="py-1 px-2 bg-[#F5E1CE] text-[#D9914E] text-xs rounded-xl">
                               Pending
                             </span>
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-end text-sm flex justify-end font-lato font-bold">
-                            <ArrowDownToLine size={20} />
+                          <td className="px-6 py-4 whitespace-nowrap text-end text-sm flex justify-end font-lato font-bold">
+                            <ArrowDownToLine className="group-hover:opacity-100 opacity-0 transition-opacity duration-500 hover:text-[#A8A8A8] text-[#A8A8A8]" size={20} />
                           </td>
                         </tr>
                       </tbody>

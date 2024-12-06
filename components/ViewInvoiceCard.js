@@ -354,7 +354,7 @@ const ViewInvoiceCard = () => {
       {/* Right side */}
       <div className="w-2/5 bg-[#FAFAFA] rounded-lg overflow-scroll scrollable-box p-5 space-y-5 relative">
         {/* Buttons */}
-        <div className="space-y-3 pb-10 border-b border-b-[#EFEFEF]">
+        <div className="space-y-1 pb-10 border-b border-b-[#EFEFEF]">
           <button
             type="button"
             className="py-2 w-full font-inter font-semibold text-[#5D9271] bg-[#EFF8D0] rounded-lg"
