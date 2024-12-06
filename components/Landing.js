@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import Footer from "./Footer";
 
 import Image from "next/image";
 
@@ -74,14 +76,14 @@ const Landing = () => {
 
           {isLoggedIn ? (
             <div className="flex gap-2 items-center">
-              <button
-                type="button"
-                className="bg-[#EFF8D0] p-2 font-inter font-semibold rounded-md text-[#5D9271]"
+              <Link
+                href="/create-invoice"
+                className="bg-[#EFF8D0] p-2 font-inter font-semibold rounded-lg text-[#5D9271]"
               >
                 Create Invoice
-              </button>
+              </Link>
 
-              <span className="bg-[#EFF8D0] p-2 flex items-center justify-center rounded-md">
+              <span className="bg-[#EFF8D0] p-2 flex items-center justify-center rounded-lg">
                 <Image
                   src={`/Images/profile.svg`}
                   width={20}
@@ -93,7 +95,7 @@ const Landing = () => {
           ) : (
             <button
               type="button"
-              className="bg-[#EFF8D0] py-2 px-8 font-inter font-semibold rounded-md text-[#5D9271]"
+              className="bg-[#EFF8D0] py-2 px-8 font-inter font-semibold rounded-lg text-[#5D9271]"
             >
               Log In
             </button>
@@ -102,16 +104,7 @@ const Landing = () => {
       </div>
 
       {/* Footer */}
-      <div
-        className="absolute left-[30%] bottom-2 transform -translate-x-[30%]  
-      flex gap-x-2 items-center"
-      >
-        <p className="text-sm font-inter text-faded-text font-medium">
-          Powered by
-        </p>
-
-        <Image src={`/Images/Rq.svg`} width={40} height={40} alt="Rq logo" />
-      </div>
+      <Footer />
     </div>
   );
 };

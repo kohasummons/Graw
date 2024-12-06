@@ -11,6 +11,7 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         "faded-text": "#00000099",
+        ash: "#F5F5F5",
       },
       fontFamily: {
         inter: ["var(--font-inter)", "sans-serif"],

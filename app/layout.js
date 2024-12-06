@@ -29,7 +29,7 @@ export const metadata = {
     apple: "/favicon.ico",
     other: {
       rel: "/favicon.ico",
-      url: "/favicon.ico",
+      url: "/favicon.",
     },
   },
 };
