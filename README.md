@@ -20,29 +20,12 @@ Powered by [Request Network](https://request.network/)
 
 ---
 
-## 🌟 Why Graw?
-
-### Problem
-Managing invoices and payments can be time-consuming and tedious. Tracking statuses, ensuring payments, and keeping records often require juggling multiple tools.
-
-### Solution
-Graw centralizes invoicing and payment management. With blockchain integration and a simple yet powerful interface, Graw ensures users can focus on their work while leaving payment hassles behind.
-
-### Value Proposition
-- **Speed**: Instant invoice creation and payments.
-- **Simplicity**: A user-friendly interface for professionals and non-tech users.
-- **Security**: Powered by blockchain for transparent and secure payments.
-- **Innovation**: Combines modern invoicing with the latest Web3 technologies.
-
----
-
 ## 🛠️ Technology Stack
 
 Graw leverages the following technologies:
-- **Frontend**: React.js
-- **Blockchain**: Ethereum Sepolia
-- **Currency Support**: USDT and others
-- **Integration**: Stripe API for seamless payment processing
+- Next.js
+- Tailwind CSS
+- Request Network
 
 ---
 
