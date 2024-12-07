@@ -135,7 +135,7 @@ const CreateInvoiceCard = () => {
   return (
     <>
       {/* Left side */}
-      <div className="w-3/5 bg-[#FAFAFA] h-[75vh] rounded-lg overflow-scroll scrollable-box p-7 space-y-10 relative">
+      <div className="w-3/5 bg-[#FAFAFA] h-[75dvh] rounded-lg overflow-scroll scrollable-box p-7 space-y-10 relative">
         {/* header */}
         <div className="flex justify-between items-center sticky">
           <h2 className="text-[64px] font-lato font-semibold">Invoice</h2>
@@ -360,18 +360,18 @@ const CreateInvoiceCard = () => {
           </div>
 
           {/* Footer */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center bottom-0">
             <Link href={`/`}>
               <Image
                 src={`/Images/logo-small.svg`}
-                width={40}
-                height={40}
+                width={60}
+                height={60}
                 alt="Graw logo"
               />
             </Link>
 
-            <Link href={`/`} className="text-[10px] text-[#A8A8A8]">
-              graw.xyz
+            <Link href={`/`} className="text-[13px] text-[#A8A8A8]">
+              Usegraw.xyz
             </Link>
           </div>
         </div>
@@ -493,7 +493,7 @@ const CreateInvoiceCard = () => {
                 {/* Footer */}
                 <div
                   className={`absolute lg:bottom-2 xl:bottom-5 right-4 ${
-                    activeTab === 0 ? "xl:w-3/5" : "xl:w-[65%]"
+                    activeTab === 0 ? "" : ""
                   } flex gap-2`}
                 >
                   <button

@@ -138,14 +138,14 @@ export default function InvoiceShimmer() {
         <Link href={`/`}>
           <Image
             src={`/Images/logo-small.svg`}
-            width={40}
-            height={40}
+            width={60}
+            height={60}
             alt="Graw logo"
           />
         </Link>
 
-        <Link href={`/`} className="text-[10px] text-[#A8A8A8]">
-          graw.xyz
+        <Link href={`/`} className="text-[13px] text-[#A8A8A8]">
+          Usegraw.xyz
         </Link>
       </div>
     </div>
