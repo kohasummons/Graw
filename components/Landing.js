@@ -67,7 +67,9 @@ const Landing = () => {
         <div className="space-y-7">
           <div>
             {" "}
-            <h1 className="font-lato text-[96px] font-bold leading-none">Graw</h1>
+            <h1 className="font-lato text-[96px] font-bold leading-none">
+              Graw
+            </h1>
             <p className="text-faded-text font-inter font-medium text-3xl mt-1 ml-1">
               Create Invoice. Send. Get Paid <br /> Instantly — No strings
               attached
@@ -77,7 +79,7 @@ const Landing = () => {
           {isLoggedIn ? (
             <div className="flex gap-2 items-center ml-1">
               <Link
-                href="/create-invoice"
+                href="/dashboard"
                 className="bg-[#EFF8D0] p-2 font-inter font-semibold rounded-lg text-[#5D9271]"
               >
                 Create Invoice

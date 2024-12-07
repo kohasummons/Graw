@@ -1,7 +1,7 @@
 "use client";
 
 // Library imports
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -22,13 +22,14 @@ import {
 const CreateInvoiceCard = () => {
   //  Form
   const [formData, setFormData] = useState({});
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState("/Images/logo-black.svg");
 
   const [items, setItems] = useState([
     {
       item_name: "",
       quantity: "",
       unit_price: "",
+      total: 0,
     },
   ]);
 
@@ -36,6 +37,10 @@ const CreateInvoiceCard = () => {
     const { name, value } = e.target;
     const updatedItems = [...items];
     updatedItems[index][name] = value;
+
+    updatedItems[index].total =
+      updatedItems[index].quantity * updatedItems[index].unit_price;
+
     setItems(updatedItems);
   };
 
@@ -48,6 +53,17 @@ const CreateInvoiceCard = () => {
     updatedItems.splice(index, 1);
     setItems(updatedItems);
   };
+
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    const total = items.reduce((acc, item) => acc + item.total, 0);
+    setGrandTotal(total);
+    setFormData((prevData) => ({
+      ...prevData,
+      [`total_amount_due`]: total,
+    }));
+  }, [items]);
 
   const tabs = [
     {
@@ -115,12 +131,13 @@ const CreateInvoiceCard = () => {
   const returnToDashboard = () => {
     router.push("/dashboard");
   };
+
   return (
     <>
       {/* Left side */}
       <div className="w-3/5 bg-[#FAFAFA] h-[75vh] rounded-lg overflow-scroll scrollable-box p-7 space-y-10 relative">
         {/* header */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center sticky">
           <h2 className="text-[64px] font-lato font-semibold">Invoice</h2>
 
           {img ? (
@@ -136,218 +153,227 @@ const CreateInvoiceCard = () => {
         </div>
 
         {/* Content */}
-        <div className="h-1/2 xl:h-[65%] 2xl:h-[72%] overflow-y-scroll overflow-x-hidden scrollable-box truncate">
-          {/* Dates */}
-          <div className="pb-7 border-b border-b-[#EFEFEF] mb-10">
-            <div className="flex">
-              <div className="space-y-2 w-[30%]">
-                <h3 className="capitalize text-sm font-lato font-bold">
-                  Invoice Date
-                </h3>
+        <div className="space-y-10">
+          <div>
+            {/* Dates */}
+            <div className="pb-7 border-b border-b-[#EFEFEF] mb-10">
+              <div className="flex gap-5">
+                <div className="space-y-2 w-[25%]">
+                  <h3 className="capitalize text-sm font-lato font-bold">
+                    Invoice Date
+                  </h3>
 
-                <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                  {formData?.invoice_date || <FieldPlaceholder />}
+                  <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                    {formData?.invoice_date || <FieldPlaceholder />}
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2 w-[30%]">
-                <h3 className="capitalize text-sm font-lato font-bold">
-                  Due Date
-                </h3>
+                <div className="space-y-2 w-[25%]">
+                  <h3 className="capitalize text-sm font-lato font-bold">
+                    Due Date
+                  </h3>
 
-                <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                  {formData?.due_date || <FieldPlaceholder />}
+                  <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                    {formData?.due_date || <FieldPlaceholder />}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Invoice info */}
-          <div className="pb-7 border-b border-b-[#EFEFEF] mb-5">
-            <div className="flex ">
-              <div className="space-y-2 w-[30%]">
-                <h3 className="capitalize text-sm font-lato font-bold">From</h3>
+            {/* Invoice info */}
+            <div className="pb-7 border-b border-b-[#EFEFEF] mb-5">
+              <div className="flex gap-5">
+                <div className="space-y-2 w-[25%]">
+                  <h3 className="capitalize text-sm font-lato font-bold">
+                    From
+                  </h3>
 
-                <div>
-                  <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                    {formData?.sender_name || <FieldPlaceholder />}
+                  <div>
+                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                      {formData?.sender_name || <FieldPlaceholder />}
+                    </div>
+                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                      {formData?.sender_email || <FieldPlaceholder />}
+                    </div>
                   </div>
+
                   <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                    {formData?.sender_email || <FieldPlaceholder />}
+                    {shortenAddress(formData?.sender_wallet_address) || (
+                      <FieldPlaceholder />
+                    )}
                   </div>
                 </div>
 
-                <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                  {shortenAddress(formData?.sender_wallet_address) || (
+                <div className="space-y-2 basis-[25%] truncate">
+                  <h3 className="capitalize text-sm font-lato font-bold">To</h3>
+
+                  <div className="w-full overflow-x-hidden">
+                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate ">
+                      {formData?.receiver_name || <FieldPlaceholder />}
+                    </div>
+
+                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate ">
+                      {formData?.receiver_email || <FieldPlaceholder />}
+                    </div>
+                  </div>
+
+                  <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                    {shortenAddress(formData?.receiver_wallet_address) || (
+                      <FieldPlaceholder />
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2 w-[30%]">
+                  <h3 className="capitalize text-sm font-lato font-bold">
+                    Invoice No
+                  </h3>
+
+                  <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                    {formData?.invoice_no || <FieldPlaceholder />}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Other Detail */}
+            <div className="pb-10 border-b border-b-[#EFEFEF] mb-5">
+              {/* Header */}
+              <div className="pb-5 border-b border-b-[#EFEFEF] flex gap-5 mb-5">
+                <div className="w-[25%]">
+                  <h3 className="text-sm font-lato font-bold">Item</h3>
+                </div>
+
+                <div className="w-[25%]">
+                  <h3 className="text-sm font-lato font-bold">Quantity</h3>
+                </div>
+
+                <div className="w-[25%]">
+                  <h3 className="text-sm font-lato font-bold">Unit Price</h3>
+                </div>
+
+                <div className="w-[15%]">
+                  <h3 className="text-sm font-lato font-bold">Total</h3>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="space-y-3">
+                {items?.map((item, index) => (
+                  <div key={index} className="flex gap-5">
+                    <div className="w-[25%]">
+                      <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                        {item?.item_name || <FieldPlaceholder />}
+                      </div>
+                    </div>
+
+                    <div className="w-[25%]">
+                      <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                        {item?.quantity || <FieldPlaceholder />}
+                      </div>
+                    </div>
+
+                    <div className="w-[25%]">
+                      <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                        <span className="text-[8px]">{formData.currency}</span>{" "}
+                        {item?.unit_price || <FieldPlaceholder />}
+                      </div>
+                    </div>
+
+                    <div className="w-[15%]">
+                      <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
+                        <span className="text-[8px]">{formData.currency}</span>{" "}
+                        {item?.total || <FieldPlaceholder />}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Total amount */}
+            <div className="pb-16 border-b border-b-[#EFEFEF] mb-5">
+              <div className="float-right w-[71%] flex items-end">
+                <div className="w-[40%]">
+                  <p className="text-sm font-lato font-bold">
+                    Total amoumnt due
+                  </p>
+                </div>
+
+                <div className="w-1/2">
+                  <div className="font-lato text-3xl text-[#A8A8A8] font-bold truncate">
+                    <span className="text-sm">{formData.currency}</span>{" "}
+                    {formData?.total_amount_due || <FieldPlaceholder />}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Payment details */}
+            <div className="flex gap-5">
+              <div className="basis-[25%] space-y-3">
+                <h3 className="capitalize text-sm font-lato font-bold">
+                  Payment Network
+                </h3>
+
+                <div className="font-lato text-xs text-[#A8A8A8] font-bold flex gap-2">
+                  {formData?.payment_network ? (
+                    <Image
+                      src={`${formData?.payment_network?.icon}`}
+                      width={15}
+                      height={15}
+                      alt="logo"
+                    />
+                  ) : (
                     <FieldPlaceholder />
                   )}
+
+                  <span className="truncate">
+                    {formData?.payment_network?.name || <FieldPlaceholder />}
+                  </span>
                 </div>
               </div>
 
-              <div className="space-y-2 basis-[30%] truncate">
-                <h3 className="capitalize text-sm font-lato font-bold">To</h3>
-
-                <div className="w-full overflow-x-hidden">
-                  <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate ">
-                    {formData?.receiver_name || <FieldPlaceholder />}
-                  </div>
-
-                  <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate ">
-                    {formData?.receiver_email || <FieldPlaceholder />}
-                  </div>
-                </div>
-
-                <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                  {shortenAddress(formData?.receiver_wallet_address) || (
-                    <FieldPlaceholder />
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-2 w-[30%]">
+              <div className="w-[25%] space-y-3">
                 <h3 className="capitalize text-sm font-lato font-bold">
-                  Invoice No
+                  Payment Currency
                 </h3>
 
-                <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                  {formData?.invoice_no || <FieldPlaceholder />}
+                <div className="font-lato text-xs text-[#A8A8A8] font-bold flex gap-2">
+                  {formData?.payment_currency ? (
+                    <Image
+                      src={`${formData?.payment_currency?.icon}`}
+                      width={15}
+                      height={15}
+                      alt="logo"
+                    />
+                  ) : (
+                    <FieldPlaceholder />
+                  )}
+
+                  <span className="truncate">
+                    {formData?.payment_currency?.name || <FieldPlaceholder />}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Other Detail */}
-          <div className="pb-10 border-b border-b-[#EFEFEF] mb-5">
-            {/* Header */}
-            <div className="pb-5 border-b border-b-[#EFEFEF] flex mb-5">
-              <div className="w-[30%]">
-                <h3 className="text-sm font-lato font-bold">Item</h3>
-              </div>
+          {/* Footer */}
+          <div className="flex justify-between items-center">
+            <Link href={`/`}>
+              <Image
+                src={`/Images/logo-small.svg`}
+                width={40}
+                height={40}
+                alt="Graw logo"
+              />
+            </Link>
 
-              <div className="w-[30%]">
-                <h3 className="text-sm font-lato font-bold">Quantity</h3>
-              </div>
-
-              <div className="w-[30%]">
-                <h3 className="text-sm font-lato font-bold">Unit Price</h3>
-              </div>
-
-              <div className="w-[10%]">
-                <h3 className="text-sm font-lato font-bold">Total</h3>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="space-y-3">
-              {items?.map((item, index) => (
-                <div key={index} className="flex">
-                  <div className="basis-[30%]">
-                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                      {item?.item_name || <FieldPlaceholder />}
-                    </div>
-                  </div>
-
-                  <div className="w-[30%]">
-                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                      {item?.quantity || <FieldPlaceholder />}
-                    </div>
-                  </div>
-
-                  <div className="w-[30%]">
-                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                      {item?.unit_price || <FieldPlaceholder />}
-                    </div>
-                  </div>
-
-                  <div className="w-[10%]">
-                    <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                      {formData?.total || <FieldPlaceholder />}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Link href={`/`} className="text-[10px] text-[#A8A8A8]">
+              graw.xyz
+            </Link>
           </div>
-
-          {/* Total amount */}
-          <div className="pb-16 border-b border-b-[#EFEFEF] mb-5">
-            <div className="float-right w-[70%] flex ">
-              <div className="w-[42%]">
-                <p className="text-sm font-lato font-bold">Total amoumnt due</p>
-              </div>
-
-              <div className="w-1/2">
-                <div className="font-lato text-xs text-[#A8A8A8] font-bold truncate">
-                  {formData?.total_amount_due || <FieldPlaceholder />}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Payment details */}
-          <div className="flex">
-            <div className="basis-[30%] space-y-3">
-              <h3 className="capitalize text-sm font-lato font-bold">
-                Payment Network
-              </h3>
-
-              <div className="font-lato text-xs text-[#A8A8A8] font-bold flex gap-2">
-                {formData?.payment_network ? (
-                  <Image
-                    src={`${formData?.payment_network?.icon}`}
-                    width={15}
-                    height={15}
-                    alt="logo"
-                  />
-                ) : (
-                  <FieldPlaceholder />
-                )}
-
-                <span className="truncate">
-                  {formData?.payment_network?.name || <FieldPlaceholder />}
-                </span>
-              </div>
-            </div>
-
-            <div className="w-[30%] space-y-3">
-              <h3 className="capitalize text-sm font-lato font-bold">
-                Payment Currency
-              </h3>
-
-              <div className="font-lato text-xs text-[#A8A8A8] font-bold flex gap-2">
-                {formData?.payment_currency ? (
-                  <Image
-                    src={`${formData?.payment_currency?.icon}`}
-                    width={15}
-                    height={15}
-                    alt="logo"
-                  />
-                ) : (
-                  <FieldPlaceholder />
-                )}
-
-                <span className="truncate">
-                  {formData?.payment_currency?.name || <FieldPlaceholder />}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="flex justify-between items-center">
-          <Link href={`/`}>
-            <Image
-              src={`/Images/logo-small.svg`}
-              width={40}
-              height={40}
-              alt="Graw logo"
-            />
-          </Link>
-
-          <Link href={`/`} className="text-[10px] text-[#A8A8A8]">
-            graw.xyz
-          </Link>
         </div>
       </div>
 
@@ -460,12 +486,16 @@ const CreateInvoiceCard = () => {
                 )}
 
                 {/* Content */}
-                <div className="h-3/5 xl:h-[55%] 2xl:h-[68%] overflow-scroll scrollable-box">
+                <div className="h-2/5 xl:h-[55%] 2xl:h-[68%] overflow-scroll scrollable-box">
                   {tabs[activeTab].content}
                 </div>
 
                 {/* Footer */}
-                <div className="absolute bottom-5 right-4 xl:w-3/5 flex gap-2">
+                <div
+                  className={`absolute lg:bottom-2 xl:bottom-5 right-4 ${
+                    activeTab === 0 ? "xl:w-3/5" : "xl:w-[65%]"
+                  } flex gap-2`}
+                >
                   <button
                     className="bg-[#E7E7E7] text-[#A3A3A3] 
            font-inter font-semibold py-2 px-4 rounded-lg"
@@ -473,14 +503,24 @@ const CreateInvoiceCard = () => {
                     Cancel
                   </button>
 
-                  <button
-                    className="bg-[#EFF8D0] text-[#5D9271] font-inter font-semibold py-2 px-4 rounded-lg
+                  {activeTab == 0 ? (
+                    <button
+                      className="bg-[#EFF8D0] text-[#5D9271] font-inter font-semibold py-2 px-4 rounded-lg
           flex gap-2 items-center"
-                    onClick={handleSubmit}
-                  >
-                    Continue
-                    <ArrowRight size={20} />
-                  </button>
+                      onClick={() => handleTabClick(1)}
+                    >
+                      Continue
+                      <ArrowRight size={20} />
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-[#EFF8D0] text-[#5D9271] font-inter font-semibold py-2 px-4 rounded-lg
+          flex gap-2 items-center"
+                      onClick={handleSubmit}
+                    >
+                      Create Invoice
+                    </button>
+                  )}
                 </div>
               </>
             )}

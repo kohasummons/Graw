@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 // Components
 import Footer from "./Footer";
@@ -31,6 +32,7 @@ const Dashboard = () => {
   ];
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const viewInvoice = (id) => {
     router.push(`/dashboard/single-invoice/${id}`);
@@ -73,26 +75,48 @@ const Dashboard = () => {
         <div className="absolute -left-16 top-0 space-y-3">
           <Link
             href={`/dashboard`}
-            className="flex items-center justify-center p-3 bg-ash rounded-lg cursor-pointer"
+            className={`flex items-center justify-center p-3 ${
+              pathname === "/dashboard" ? "bg-[#EFF8D0]" : "bg-ash "
+            } rounded-lg cursor-pointer`}
           >
-            <Image
-              src={`/Images/dashboard.svg`}
-              width={25}
-              height={25}
-              alt="Dashboard Icon"
-            />
+            {pathname === "/dashboard" ? (
+              <Image
+                src={`/Images/Frame.svg`}
+                width={25}
+                height={25}
+                alt="Dashboard Icon"
+              />
+            ) : (
+              <Image
+                src={`/Images/dashboard.svg`}
+                width={25}
+                height={25}
+                alt="Dashboard Icon"
+              />
+            )}
           </Link>
 
           <Link
             href={`/create-invoice`}
-            className="flex items-center justify-center p-3 bg-[#EFF8D0] rounded-lg cursor-pointer"
+            className={`flex items-center justify-center p-3 ${
+              pathname === "/create-invoice" ? "bg-[#EFF8D0]" : "bg-ash "
+            } rounded-lg cursor-pointer`}
           >
-            <Image
-              src={`/Images/plus-icon.svg`}
-              width={25}
-              height={25}
-              alt="Plus Icon"
-            />
+            {pathname === "/create-invoice" ? (
+              <Image
+                src={`/Images/plus-icon.svg`}
+                width={25}
+                height={25}
+                alt="Plus Icon"
+              />
+            ) : (
+              <Image
+                src={`/Images/CI.svg`}
+                width={25}
+                height={25}
+                alt="Plus Icon"
+              />
+            )}
           </Link>
         </div>
 
@@ -187,7 +211,10 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-end text-sm flex justify-end font-lato font-bold">
-                            <ArrowDownToLine className="group-hover:opacity-100 opacity-0 transition-opacity duration-500 hover:text-[#A8A8A8] text-[#A8A8A8]" size={20} />
+                            <ArrowDownToLine
+                              className="group-hover:opacity-100 opacity-0 transition-opacity duration-500 hover:text-[#A8A8A8] text-[#A8A8A8]"
+                              size={20}
+                            />
                           </td>
                         </tr>
                       </tbody>
