@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useWalletClient } from 'wagmi';
+import { useAccount, useWalletClient } from 'wagmi';
 import { createRequest, prepareRequest } from '@/requestNetwork';
 import { toast } from 'react-hot-toast';
 
@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 
 const CreateInvoiceCard = () => {
+  const { address } = useAccount();
   //  Form
   const [formData, setFormData] = useState({});
   const [img, setImg] = useState('/Images/logo-black.svg');
@@ -144,7 +145,6 @@ const CreateInvoiceCard = () => {
       invoice_no,
       due_date,
     } = formData;
-    console.log(formData);
     const sellerInfo = {
       businessName: sender_name,
       email: sender_email,
@@ -265,9 +265,9 @@ const CreateInvoiceCard = () => {
                   </div>
 
                   <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
-                    {shortenAddress(formData?.sender_wallet_address) || (
-                      <FieldPlaceholder />
-                    )}
+                    {shortenAddress(
+                      address ?? formData?.sender_wallet_address
+                    ) || <FieldPlaceholder />}
                   </div>
                 </div>
 

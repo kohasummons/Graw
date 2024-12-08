@@ -8,26 +8,21 @@ import { getRequestByID } from '@/requestNetwork';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { formatInvoice } from './Dashboard';
-import { useWalletClient } from 'wagmi';
 
 const SingleInvoice = () => {
   const { invoice_id } = useParams();
-  const { data: walletClient } = useWalletClient();
-  const address = walletClient?.account?.address;
   const [invoice, setInvoice] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const getInvoice = useCallback(async () => {
     try {
       const request = await getRequestByID(invoice_id);
-      console.log('request', request);
-      setInvoice(formatInvoice(request, address));
+      setInvoice(formatInvoice(request));
       setIsLoading(false);
-      console.log(formatInvoice(request, address));
     } catch (error) {
       console.error(error);
     }
-  }, [invoice_id, address]);
+  }, [invoice_id]);
 
   useEffect(() => {
     getInvoice();

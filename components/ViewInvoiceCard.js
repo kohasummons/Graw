@@ -4,10 +4,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEthersV5Signer } from '@/requestNetwork/use-ethers-v5-signer';
 import { useEthersV5Provider } from '@/requestNetwork/use-ethers-v5-provider';
 import { toast } from 'react-hot-toast';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 // Components
 import InvoiceShimmer from './InvoiceShimmer';
@@ -39,14 +40,35 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   }
 
+  const handleDownloadInvoice = async () => {
+    try {
+      const invoiceElement = document.getElementById('invoice_container');
+      if (!invoiceElement) return;
+
+      // Use html2canvas to take a screenshot of the element
+      const canvas = await html2canvas(invoiceElement);
+      const imgData = canvas.toDataURL('image/png');
+
+      // Initialize jsPDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`invoice-${invoice?.id || 'download'}.pdf`);
+      toast.success('Invoice downloaded successfully');
+    } catch (error) {
+      console.error('Error downloading invoice:', error);
+      toast.error('Error downloading invoice');
+    }
+  };
+
   const handlePayInvoice = async (id) => {
     if (invoice.status === 'Paid') {
       return;
     }
     setIsLoadingPayment(true);
     try {
-      console.log(signer);
-      console.log(provider);
       const res = await payRequest({
         requestId: id,
         signer: signer,
@@ -68,7 +90,10 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
       {isLoading ? (
         <InvoiceShimmer />
       ) : (
-        <div className='w-3/5 bg-[#FAFAFA] h-[75vh] rounded-lg overflow-scroll scrollable-box p-7 space-y-10 relative'>
+        <div
+          id='invoice_container'
+          className='w-3/5 bg-[#FAFAFA] h-[75vh] rounded-lg overflow-scroll scrollable-box p-7 space-y-10 relative'
+        >
           {/* header */}
           <div className='flex justify-between items-center'>
             <h2 className='text-[64px] font-lato font-semibold'>Invoice</h2>
@@ -91,7 +116,7 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
                     Invoice Date
                   </h3>
 
-                  <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                  <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                     {invoice?.date}
                   </div>
                 </div>
@@ -101,7 +126,7 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
                     Due Date
                   </h3>
 
-                  <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                  <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                     {invoice?.dueDate}
                   </div>
                 </div>
@@ -117,33 +142,33 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
                   </h3>
 
                   <div>
-                    <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                    <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                       {invoice?.sellerInfo?.name}
                     </div>
-                    <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                    <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                       {invoice?.sellerInfo?.email}
                     </div>
                   </div>
 
-                  <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                  <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                     {shortenAddress(invoice?.sellerInfo?.address)}
                   </div>
                 </div>
 
-                <div className='space-y-2 basis-[30%] truncate'>
+                <div className='space-y-2 basis-[30%]'>
                   <h3 className='capitalize text-sm font-lato font-bold'>To</h3>
 
-                  <div className='w-full overflow-x-hidden'>
-                    <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate '>
+                  <div className='w-full'>
+                    <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                       {invoice?.buyerInfo?.name}
                     </div>
 
-                    <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate '>
+                    <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                       {invoice?.buyerInfo?.email}
                     </div>
                   </div>
 
-                  <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                  <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                     {shortenAddress(invoice?.buyerInfo?.address)}
                   </div>
                 </div>
@@ -153,7 +178,7 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
                     Invoice No
                   </h3>
 
-                  <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                  <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                     {shortenRequestId(invoice?.id)}
                   </div>
                 </div>
@@ -186,25 +211,25 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
                 {invoice?.items?.map((item, index) => (
                   <div key={index} className='flex'>
                     <div className='basis-[30%]'>
-                      <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                      <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                         {item?.name}
                       </div>
                     </div>
 
                     <div className='w-[30%]'>
-                      <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                      <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                         {item?.quantity}
                       </div>
                     </div>
 
                     <div className='w-[30%]'>
-                      <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                      <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                         {formatEther(item?.unitPrice)} ETH
                       </div>
                     </div>
 
                     <div className='w-[10%]'>
-                      <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                      <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                         {formatEther(item?.total)} ETH
                       </div>
                     </div>
@@ -223,7 +248,7 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
                 </div>
 
                 <div className='w-1/2'>
-                  <div className='font-lato text-xs text-[#A8A8A8] font-bold truncate'>
+                  <div className='font-lato text-xs text-[#A8A8A8] font-bold'>
                     {formatEther(invoice?.amount)} ETH
                   </div>
                 </div>
@@ -310,6 +335,7 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
           </button>
 
           <button
+            onClick={handleDownloadInvoice}
             type='button'
             className='py-2 w-full font-inter font-semibold text-[#5D9271] bg-white border border-[#5D9271] rounded-lg'
           >

@@ -4,15 +4,16 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import FormInput from './FormInput';
+import { useAccount } from 'wagmi';
 
 const SenderInfo = ({ formData, setFormData, img, setImg }) => {
+  const { address } = useAccount();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log(formData);
   };
 
   //   const [img, setImg] = useState("");
@@ -29,7 +30,6 @@ const SenderInfo = ({ formData, setFormData, img, setImg }) => {
         setImg(event.target.result);
         setImgName(file.name);
         setImgSize(file.size);
-        console.log(imgName);
       };
 
       setFormData((prevData) => ({
@@ -58,6 +58,7 @@ const SenderInfo = ({ formData, setFormData, img, setImg }) => {
           type={`text`}
           name={`sender_name`}
           label={`Personal Name`}
+          value={formData.sender_name}
           handleInputChange={handleInputChange}
         />
 
@@ -65,6 +66,7 @@ const SenderInfo = ({ formData, setFormData, img, setImg }) => {
           type={`email`}
           name={`sender_email`}
           label={`Personal Email`}
+          value={formData.sender_email}
           handleInputChange={handleInputChange}
         />
 
@@ -74,6 +76,7 @@ const SenderInfo = ({ formData, setFormData, img, setImg }) => {
               type={`text`}
               name={`sender_wallet_address`}
               label={`Wallet Address`}
+              value={formData.sender_wallet_address ?? address}
               handleInputChange={handleInputChange}
             />
           </div>
