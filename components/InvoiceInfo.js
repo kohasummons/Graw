@@ -48,8 +48,12 @@ const InvoiceInfo = ({
       name: `Ethereum Sepolia`,
     },
     {
-      icon: `/Images/usdt.svg`,
-      name: `USDT`,
+      icon: `/Images/eth-logo.svg`,
+      name: `Etherium Mainnet`,
+    },
+    {
+      icon: `/Images/eth-logo.svg`,
+      name: `Gnosis`,
     },
   ];
 
@@ -74,12 +78,16 @@ const InvoiceInfo = ({
   const [selectedPaymentCurrency, setSelectedPaymentCurrency] = useState("");
   const PaymentCurrencyOptions = [
     {
-      icon: `/Images/eth-logo.svg`,
-      name: `Ethereum Sepolia`,
+      icon: `/Images/usdt.svg`,
+      name: `USDT`,
     },
     {
       icon: `/Images/usdt.svg`,
-      name: `USDT`,
+      name: `ETH`,
+    },
+    {
+      icon: `/Images/usdt.svg`,
+      name: `USDC`,
     },
   ];
 

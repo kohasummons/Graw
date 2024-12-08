@@ -212,7 +212,8 @@ const Dashboard = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-end text-sm flex justify-end font-lato font-bold">
                             <ArrowDownToLine
-                              className="group-hover:opacity-100 opacity-0 transition-opacity duration-500 hover:text-[#A8A8A8] text-[#A8A8A8]"
+                              className="group-hover:opacity-100 opacity-0 
+                              transition-opacity duration-500 hover:text-[#A8A8A8] text-[#A8A8A8]"
                               size={20}
                             />
                           </td>
