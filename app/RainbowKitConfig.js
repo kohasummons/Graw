@@ -9,10 +9,9 @@ const queryClient = new QueryClient();
 
 const RainbowKitConfig = ({ children }) => {
   const config = getDefaultConfig({
-    appName: 'My RainbowKit App',
-    projectId: 'YOUR_PROJECT_ID',
+    appName: 'UseGraw',
+    projectId: '7b8c9976c197d282b021ff419b41542f',
     chains: [sepolia],
-    ssr: true,
   });
 
   return (
