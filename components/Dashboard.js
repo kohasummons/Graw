@@ -204,7 +204,6 @@ const Dashboard = () => {
                         >
                           Amount
                         </th>
-
                         <th
                           scope='col'
                           className='px-6 py-3 text-start text-sm font-medium '

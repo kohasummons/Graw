@@ -273,14 +273,14 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
             <Link href={`/`}>
               <Image
                 src={`/Images/logo-small.svg`}
-                width={40}
-                height={40}
+                width={60}
+                height={60}
                 alt='Graw logo'
               />
             </Link>
 
-            <Link href={`/`} className='text-[10px] text-[#A8A8A8]'>
-              graw.xyz
+            <Link href={`/`} className='text-[13px] text-[#A8A8A8]'>
+              Usegraw.xyz
             </Link>
           </div>
         </div>
@@ -289,7 +289,7 @@ const ViewInvoiceCard = ({ invoice, isLoading }) => {
       {/* Right side */}
       <div className='w-2/5 bg-[#FAFAFA] rounded-lg overflow-scroll scrollable-box p-5 space-y-5 relative'>
         {/* Buttons */}
-        <div className='space-y-4 pb-10 border-b border-b-[#EFEFEF]'>
+        <div className='space-y-1 pb-10 border-b border-b-[#EFEFEF]'>
           <button
             onClick={() => {
               handlePayInvoice(invoice?.id);
