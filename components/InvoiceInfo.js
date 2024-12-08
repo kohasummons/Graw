@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState } from 'react';
+import Image from 'next/image';
 
-import FormInput from "./FormInput";
+import FormInput from './FormInput';
 
-import { Trash, Plus, ChevronDown } from "lucide-react";
+import { Trash, Plus, ChevronDown } from 'lucide-react';
+import { Types } from '@requestnetwork/request-client.js';
 
 const InvoiceInfo = ({
   formData,
@@ -23,8 +24,8 @@ const InvoiceInfo = ({
     }));
   };
 
-  const [selectedCurrency, setSelectedCurrency] = useState("");
-  const CurrencyOptions = [`USD`, `NGN`, `GBP`];
+  const [selectedCurrency, setSelectedCurrency] = useState('');
+  const CurrencyOptions = [`ETH`];
 
   const handleSelectCurrency = (choice) => {
     setSelectedCurrency(choice);
@@ -41,15 +42,11 @@ const InvoiceInfo = ({
   };
 
   //   Payment network
-  const [selectedPaymentNetwork, setSelectedPaymentNetwork] = useState("");
+  const [selectedPaymentNetwork, setSelectedPaymentNetwork] = useState('');
   const PaymentNetworkOptions = [
     {
       icon: `/Images/eth-logo.svg`,
       name: `Ethereum Sepolia`,
-    },
-    {
-      icon: `/Images/usdt.svg`,
-      name: `USDT`,
     },
   ];
 
@@ -71,15 +68,14 @@ const InvoiceInfo = ({
   };
 
   //   Payment currency
-  const [selectedPaymentCurrency, setSelectedPaymentCurrency] = useState("");
+  const [selectedPaymentCurrency, setSelectedPaymentCurrency] = useState('');
   const PaymentCurrencyOptions = [
     {
       icon: `/Images/eth-logo.svg`,
-      name: `Ethereum Sepolia`,
-    },
-    {
-      icon: `/Images/usdt.svg`,
-      name: `USDT`,
+      name: `Ether`,
+      type: Types.RequestLogic.CURRENCY.ETH,
+      address: 'eth',
+      network: 'sepolia',
     },
   ];
 
@@ -103,7 +99,7 @@ const InvoiceInfo = ({
   };
 
   return (
-    <div className="space-y-5">
+    <div className='space-y-5'>
       {/* HEADER */}
       {/* <div className="space-y-2">
         <h3 className="text-sm font-lato font-bold">Client Information</h3>
@@ -113,8 +109,8 @@ const InvoiceInfo = ({
       </div> */}
 
       {/* Form */}
-      <form className="space-y-7">
-        <div className="space-y-2">
+      <form className='space-y-7'>
+        <div className='space-y-2'>
           <FormInput
             type={`text`}
             name={`receiver_name`}
@@ -140,26 +136,26 @@ const InvoiceInfo = ({
           />
         </div>
 
-        <div className="border-t border-b border-t-border border-b-border mt-2 py-10 space-y-5">
-          <div className="bg-[#F5F5F5] rounded-xl p-5">
-            <div className="px-2 grid grid-cols-4 grid-rows-1 gap-3">
-              <span className="text-[10px] text-[#A3A3A3] font-lato font-bold col-span-2">
+        <div className='border-t border-b border-t-border border-b-border mt-2 py-10 space-y-5'>
+          <div className='bg-[#F5F5F5] rounded-xl p-5'>
+            <div className='px-2 grid grid-cols-4 grid-rows-1 gap-3'>
+              <span className='text-[10px] text-[#A3A3A3] font-lato font-bold col-span-2'>
                 Item
               </span>
-              <span className="text-[10px] text-[#A3A3A3] font-lato font-bold text-start col-span-1">
+              <span className='text-[10px] text-[#A3A3A3] font-lato font-bold text-start col-span-1'>
                 Quantity
               </span>
-              <span className="text-[10px] text-[#A3A3A3] font-lato font-bold col-span-1">
+              <span className='text-[10px] text-[#A3A3A3] font-lato font-bold col-span-1'>
                 Price
               </span>
             </div>
 
             {items?.map((item, index) => (
-              <div key={index} className="flex gap-1 rounded-xl">
-                <div className="basis-[90%]">
-                  {" "}
-                  <div className=" py-3 px-2 grid grid-cols-4 grid-rows-1 gap-3">
-                    <div className="col-span-2">
+              <div key={index} className='flex gap-1 rounded-xl'>
+                <div className='basis-[90%]'>
+                  {' '}
+                  <div className=' py-3 px-2 grid grid-cols-4 grid-rows-1 gap-3'>
+                    <div className='col-span-2'>
                       <FormInput
                         type={`text`}
                         name={`item_name`}
@@ -170,7 +166,7 @@ const InvoiceInfo = ({
                       />
                     </div>
 
-                    <div className="col-span-1">
+                    <div className='col-span-1'>
                       <FormInput
                         type={`number`}
                         name={`quantity`}
@@ -181,7 +177,7 @@ const InvoiceInfo = ({
                       />
                     </div>
 
-                    <div className="col-span-1">
+                    <div className='col-span-1'>
                       <FormInput
                         type={`number`}
                         name={`unit_price`}
@@ -195,7 +191,7 @@ const InvoiceInfo = ({
                 </div>
 
                 <div
-                  className="basis-[10%] flex items-center justify-center text-[#A3A3A3]"
+                  className='basis-[10%] flex items-center justify-center text-[#A3A3A3]'
                   onClick={() => handleDelete(index)}
                 >
                   <Trash size={20} />
@@ -205,12 +201,12 @@ const InvoiceInfo = ({
           </div>
 
           <div
-            className="bg-[#F5F5F5] rounded-xl py-5 flex justify-center items-center"
+            className='bg-[#F5F5F5] rounded-xl py-5 flex justify-center items-center'
             onClick={handleAdd}
           >
             <button
-              type="button"
-              className="flex gap-2 items-center text-[#0F0F0F] text-xs font-lato"
+              type='button'
+              className='flex gap-2 items-center text-[#0F0F0F] text-xs font-lato'
             >
               Add item
               <Plus size={12} />
@@ -218,8 +214,8 @@ const InvoiceInfo = ({
           </div>
         </div>
 
-        <div className="space-y-2">
-          <div className="flex items-center justify-between gap-5">
+        <div className='space-y-2'>
+          <div className='flex items-center justify-between gap-5'>
             <FormInput
               type={`date`}
               name={`invoice_date`}
@@ -236,8 +232,8 @@ const InvoiceInfo = ({
             />
           </div>
 
-          <div className="flex items-center justify-between gap-5">
-            <div className="basis-1/2">
+          <div className='flex items-center justify-between gap-5'>
+            <div className='basis-1/2'>
               <FormInput
                 type={`text`}
                 name={`invoice_no`}
@@ -247,36 +243,36 @@ const InvoiceInfo = ({
               />
             </div>
 
-            <div className="space-y-2 font-matter basis-1/2">
-              <div className="relative space-y-1">
+            <div className='space-y-2 font-matter basis-1/2'>
+              <div className='relative space-y-1'>
                 <label
                   htmlFor={`${name}`}
-                  className="text-[10px] text-[#A3A3A3] font-lato font-bold"
+                  className='text-[10px] text-[#A3A3A3] font-lato font-bold'
                 >
                   Currency
                 </label>
 
                 <div
-                  className="flex justify-between gap-5 w-full py-2 px-5 rounded-xl
-      items-center relative border border-border"
+                  className='flex justify-between gap-5 w-full py-2 px-5 rounded-xl
+      items-center relative border border-border'
                   onClick={handleSelect}
                 >
                   <p className={`text-nav font-lato text-sm font-bold`}>
                     {formData.currency || `Select currency`}
                   </p>
-                  <ChevronDown size={20} className="text-input" />
+                  <ChevronDown size={20} className='text-input' />
                 </div>
 
                 {/* Options */}
                 {displaySelectOption && (
                   <div
-                    className="bg-white border border-border rounded-md space-y-1 px-5 py-3 max-h-52 overflow-scroll 
-                  absolute top-16 left-0 w-full z-10"
+                    className='bg-white border border-border rounded-md space-y-1 px-5 py-3 max-h-52 overflow-scroll 
+                  absolute top-16 left-0 w-full z-10'
                   >
                     {CurrencyOptions.map((option, index) => (
                       <p
                         key={index}
-                        className="text-black hover:bg-ash hover:p-1 cursor-pointer"
+                        className='text-black hover:bg-ash hover:p-1 cursor-pointer'
                         onClick={() => {
                           handleSelectCurrency(option);
                           handleSelect();
@@ -292,18 +288,18 @@ const InvoiceInfo = ({
           </div>
 
           {/* Payment network */}
-          <div className="space-y-2 font-matter basis-1/2">
-            <div className="relative space-y-1">
+          <div className='space-y-2 font-matter basis-1/2'>
+            <div className='relative space-y-1'>
               <label
                 htmlFor={`${name}`}
-                className="text-[10px] text-[#A3A3A3] font-lato font-bold"
+                className='text-[10px] text-[#A3A3A3] font-lato font-bold'
               >
                 Payment Network
               </label>
 
               <div
-                className="flex justify-between gap-5 w-full py-2 px-5 rounded-xl
-      items-center relative border border-border"
+                className='flex justify-between gap-5 w-full py-2 px-5 rounded-xl
+      items-center relative border border-border'
                 onClick={handlePaymentNetworkSelect}
               >
                 <p
@@ -314,24 +310,24 @@ const InvoiceInfo = ({
                       src={`${formData.payment_network?.icon}`}
                       width={15}
                       height={15}
-                      alt="logo"
+                      alt='logo'
                     />
                   )}
                   {formData.payment_network?.name || `Select payment network`}
                 </p>
-                <ChevronDown size={20} className="text-input" />
+                <ChevronDown size={20} className='text-input' />
               </div>
 
               {/* Options */}
               {displayPaymentNetworkSelectOption && (
                 <div
-                  className="bg-white border border-border rounded-md space-y-2 px-5 py-3 max-h-52 overflow-scroll 
-                  absolute top-16 left-0 w-full z-10"
+                  className='bg-white border border-border rounded-md space-y-2 px-5 py-3 max-h-52 overflow-scroll 
+                  absolute top-16 left-0 w-full z-10'
                 >
                   {PaymentNetworkOptions.map((option, index) => (
                     <p
                       key={index}
-                      className="text-black hover:bg-ash rounded-xl hover:p-2 cursor-pointer flex items-center gap-2"
+                      className='text-black hover:bg-ash rounded-xl hover:p-2 cursor-pointer flex items-center gap-2'
                       onClick={() => {
                         handleSelectPaymentNetwork(option);
                         handlePaymentNetworkSelect();
@@ -341,7 +337,7 @@ const InvoiceInfo = ({
                         src={`${option?.icon}`}
                         width={15}
                         height={15}
-                        alt="logo"
+                        alt='logo'
                       />
 
                       {option?.name}
@@ -353,18 +349,18 @@ const InvoiceInfo = ({
           </div>
 
           {/* Payment currency */}
-          <div className="space-y-2 font-matter basis-1/2">
-            <div className="relative space-y-1">
+          <div className='space-y-2 font-matter basis-1/2'>
+            <div className='relative space-y-1'>
               <label
                 htmlFor={`${name}`}
-                className="text-[10px] text-[#A3A3A3] font-lato font-bold"
+                className='text-[10px] text-[#A3A3A3] font-lato font-bold'
               >
                 Payment Currency
               </label>
 
               <div
-                className="flex justify-between gap-5 w-full py-2 px-5 rounded-xl
-      items-center relative border border-border"
+                className='flex justify-between gap-5 w-full py-2 px-5 rounded-xl
+      items-center relative border border-border'
                 onClick={handlePayementCurrencySelect}
               >
                 <p
@@ -375,24 +371,24 @@ const InvoiceInfo = ({
                       src={`${formData.payment_currency?.icon}`}
                       width={15}
                       height={15}
-                      alt="logo"
+                      alt='logo'
                     />
                   )}
                   {formData.payment_currency?.name || `Select payment currency`}
                 </p>
-                <ChevronDown size={20} className="text-input" />
+                <ChevronDown size={20} className='text-input' />
               </div>
 
               {/* Options */}
               {displayPayementCurrencySelectOption && (
                 <div
-                  className="bg-white border border-border rounded-md space-y-2 px-5 py-3 max-h-52 overflow-scroll 
-                  absolute bottom-10 left-0 w-full z-10"
+                  className='bg-white border border-border rounded-md space-y-2 px-5 py-3 max-h-52 overflow-scroll 
+                  absolute bottom-10 left-0 w-full z-10'
                 >
                   {PaymentCurrencyOptions.map((option, index) => (
                     <p
                       key={index}
-                      className="text-black hover:bg-ash rounded-xl hover:p-2 cursor-pointer flex items-center gap-2"
+                      className='text-black hover:bg-ash rounded-xl hover:p-2 cursor-pointer flex items-center gap-2'
                       onClick={() => {
                         handleSelectPaymentCurrency(option);
                         handlePayementCurrencySelect();
@@ -402,7 +398,7 @@ const InvoiceInfo = ({
                         src={`${option?.icon}`}
                         width={15}
                         height={15}
-                        alt="logo"
+                        alt='logo'
                       />
 
                       {option?.name}
