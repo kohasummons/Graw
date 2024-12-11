@@ -59,11 +59,8 @@ const CreateInvoiceCard = () => {
     setItems(updatedItems);
   };
 
-  const [grandTotal, setGrandTotal] = useState(0);
-
   useEffect(() => {
     const total = items.reduce((acc, item) => acc + item.total, 0);
-    setGrandTotal(total);
     setFormData((prevData) => ({
       ...prevData,
       [`total_amount_due`]: total,
@@ -168,7 +165,7 @@ const CreateInvoiceCard = () => {
       const requestParams = prepareRequest({
         currency: payment_currency,
         payerAddress: receiver_wallet_address,
-        payeeAddress: sender_wallet_address,
+        payeeAddress: address ?? sender_wallet_address,
         amount: (Number(total_amount_due) * 1e18).toString(),
         invoiceDetails,
       });
